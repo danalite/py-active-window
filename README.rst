@@ -1,8 +1,8 @@
 py-rust-search: Search files in target directory
 ============================================================
 
-.. image:: https://github.com/danalite/py-rust-search/workflows/Build/badge.svg?branch=master
-    :target: https://github.com/danalite/py-rust-search/actions?query=branch%3Amaster
+.. image:: https://github.com/danalite/py-rust-search/workflows/Build/badge.svg?branch=main
+    :target: https://github.com/danalite/py-rust-search/actions?query=branch%3Amain
 
 A package for searching files in a target directory.
 
