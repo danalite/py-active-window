@@ -5,7 +5,7 @@ use rust_search::{FileSize, FilterExt, SearchBuilder};
 // This defines a python module. pyo3 will copy the rust doc comment
 // below into a python docstring
 
-/// A package for demangling C++ linker symbols
+/// A package for searching files
 ///
 /// Basic usage:
 ///
