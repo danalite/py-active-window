@@ -1,16 +1,16 @@
 from setuptools import setup
 from setuptools_rust import Binding, RustExtension
 
-setup(name='cpp-demangle',
-      author="Ben Frederickson",
-      author_email="ben@benfrederickson.com",
-      url='http://github.com/benfred/py-cpp-demangle/',
-      description="A package for demangling C++ linker symbols",
+setup(name='py-rust-search',
+      author="vrteee",
+      author_email="vrteee@github.com",
+      url='http://github.com/danalites/py-rust-search',
+      description="A package for fast file searching in Python using Rust",
       long_description=open("README.rst").read(),
-      version="0.1.1",
-      rust_extensions=[RustExtension('cpp_demangle', 'Cargo.toml',  binding=Binding.PyO3)],
+      version="0.0.1",
+      rust_extensions=[RustExtension('py_rust_search', 'Cargo.toml',  binding=Binding.PyO3)],
       test_suite="tests",
-      license="MIT",
+      license="GPLv3",
       classifiers=[
         "Development Status :: 3 - Alpha",
         "Programming Language :: Python :: 3",

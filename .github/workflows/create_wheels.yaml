@@ -55,7 +55,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        path: py_cpp_demangle_source
+        path: py_rust_search_source
     - uses: actions/download-artifact@v3
       with:
         name: wheels
@@ -68,7 +68,7 @@ jobs:
         pip install --force-reinstall --no-deps --no-index --find-links . cpp-demangle
     - name: Run unittests
       run: |
-        python -m unittest discover py_cpp_demangle_source/tests
+        python -m unittest discover py_rust_search_source/tests
 
   release:
     name: Release

@@ -1,41 +1,57 @@
 use pyo3::prelude::*;
-use pyo3::exceptions;
-
-
+use std::time::{Duration, SystemTime};
+use rust_search::{FileSize, FilterExt, SearchBuilder};
 
 // This defines a python module. pyo3 will copy the rust doc comment
 // below into a python docstring
 
 /// A package for demangling C++ linker symbols
 ///
-/// This package provides python bindings for the rust crate
-/// [cpp_demangle](http://github.com/gimli-rs/cpp_demangle) by building
-/// a native Python extension using [PyO3](https://github.com/pyO3/pyO3)
-///
 /// Basic usage:
 ///
-/// >>> demangle('_ZN7mangled3fooEd')
-/// 'mangled::foo(double)'
+/// >>> get_similar_files('png', './')
+/// []
 ///
-/// Passing an invalid identifier will throw a ValueError:
-///
-/// >>> demangle('invalid c++ symbol')
-/// Traceback (most recent call last):
-/// ...
-/// ValueError: mangled symbol is not well-formed
 #[pymodule]
-fn cpp_demangle(_py: Python, m: &PyModule) -> PyResult<()> {
-    // This adds a function to the python module:
-    /// Demangles a mangled c++ linker symbol name and returns it as a string
-    #[pyfn(m)]
-    fn demangle(mangled: String) -> PyResult<String> {
-        match ::cpp_demangle::Symbol::new(&mangled[..]) {
-            // Return the output as a string to Python
-            Ok(sym) => Ok(sym.to_string()),
+fn py_rust_search(_py: Python, m: &PyModule) -> PyResult<()> {
 
-            // on an error, this will raise a python ValueError exception!
-            Err(error) => return Err(exceptions::PyValueError::new_err(error.to_string()))
-        }
+    #[pyfn(m)]
+    fn get_similar_files(search_input: String, search_dir: String) -> PyResult<Vec<String>> {
+        let mut search: Vec<String> = ::rust_search::SearchBuilder::default()
+            .location(&search_dir)
+            .search_input(&search_input)
+            .depth(1)
+            .ignore_case()
+            .build()
+            .collect();
+        ::rust_search::similarity_sort(&mut search, &search_input);
+        Ok(search)
+    }
+
+    #[pyfn(m)]
+    fn get_all_ext(search_ext: String, search_dir: String) -> PyResult<Vec<String>> {
+        let files: Vec<String> = ::rust_search::SearchBuilder::default()
+        .location(&search_dir)
+        .ext(&search_ext)
+        .build()
+        .collect();
+        Ok(files)
+    }
+
+    #[pyfn(m)]
+    fn get_all_filter(search_dir: String) -> PyResult<Vec<String>> {
+        let search: Vec<String> = SearchBuilder::default()
+		.location(&search_dir)
+		.file_size_greater(FileSize::Megabyte(1.0))
+		.file_size_smaller(FileSize::Megabyte(10.0))
+		.created_after(SystemTime::now() - Duration::from_secs(3600 * 24 * 10))
+		.created_before(SystemTime::now())
+		.modified_after(SystemTime::now() - Duration::from_secs(3600 * 24 * 5))
+		// .custom_filter(|dir| dir.metadata().unwrap().is_file())
+		// .custom_filter(|dir| !dir.metadata().unwrap().permissions().readonly())
+		.build()
+		.collect();
+        Ok(search)
     }
 
     Ok(())
