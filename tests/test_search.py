@@ -1,6 +1,6 @@
 import doctest
-import py_rust_search
+import py_active_win
 
 def load_tests(loader, tests, ignore):
-    tests.addTests(doctest.DocTestSuite(py_rust_search))
+    tests.addTests(doctest.DocTestSuite(py_active_win))
     return tests

@@ -55,7 +55,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        path: py_rust_search_source
+        path: py_active_win_source
     - uses: actions/download-artifact@v3
       with:
         name: wheels
@@ -65,10 +65,10 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install wheel
       run: |
-        pip install --force-reinstall --no-deps --no-index --find-links . py-rust-search
+        pip install --force-reinstall --no-deps --no-index --find-links . py-active-window
     - name: Run unittests
       run: |
-        python -m unittest discover py_rust_search_source/tests
+        python -m unittest discover py_active_win_source/tests
 
   release:
     name: Release

@@ -1,8 +1,8 @@
-py-rust-search: Search files in target directory
+py-active-window: Search files in target directory
 ============================================================
 
-.. image:: https://github.com/danalite/py-rust-search/workflows/Build/badge.svg?branch=main
-    :target: https://github.com/danalite/py-rust-search/actions?query=branch%3Amain
+.. image:: https://github.com/danalite/py-active-window/workflows/Build/badge.svg?branch=main
+    :target: https://github.com/danalite/py-active-window/actions?query=branch%3Amain
 
 A package for searching files in a target directory.
 
@@ -17,7 +17,7 @@ To install
 
 .. code-block:: python
 
-    pip install py-rust-search
+    pip install py-active-window
 
 
 Building from source requires the nightly version of the rust compiler.
@@ -27,8 +27,8 @@ representation.
 
 .. code-block:: python
 
-    from py_rust_search import get_similar_files
-    print(get_similar_files('png', '~/Desktop'))
+    from py_active_win import get_active_win
+    print(get_active_win())
 
 
 Released under the MIT License
